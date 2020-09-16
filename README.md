@@ -10,7 +10,7 @@ A sample terragrunt usage might look like
 
 ```bash
 terraform {
-    source = "https://github.com/pimsmath/efs-mon//?ref=v0.1.0"
+    source = "git::https://github.com/pimsmath/efs-mon//?ref=v0.1.2"
 }
 
 remote_state {
