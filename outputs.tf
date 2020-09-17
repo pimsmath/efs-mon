@@ -43,3 +43,8 @@ output "instance_public_dns" {
   description = "Public DNS name assigned to the EC2 instance"
   value       = module.ec2.public_dns[0]
 }
+
+output "efs_id" {
+  description = "EFS ID"
+  value       = data.terraform_remote_state.cluster.outputs.efs_id
+}

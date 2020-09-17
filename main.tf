@@ -14,6 +14,16 @@ provider "aws" {
   profile = var.profile
 }
 
+data "terraform_remote_state" "cluster" {
+  backend = "s3"
+  config = {
+    bucket = "${var.remote_state_bucket}"
+    region = "${var.region}"
+    key = "${var.remote_state_key}"
+    profile = "${var.profile}"
+  }
+}
+
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
@@ -36,7 +46,7 @@ module "security_group" {
 
   name        = "Public SSH"
   description = "Public SSH Security Group"
-  vpc_id      = var.vpc_id
+  vpc_id      = data.terraform_remote_state.cluster.outputs.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["ssh-tcp"]
@@ -53,6 +63,6 @@ module "ec2" {
   instance_type  = "t3.micro"
   key_name       = var.ssh_key
   vpc_security_group_ids = [module.security_group.this_security_group_id]
-  subnet_id              = var.subnet_id
+  subnet_id              = data.terraform_remote_state.cluster.outputs.subnet_id
 
 }  

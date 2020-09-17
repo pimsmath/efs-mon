@@ -11,10 +11,10 @@ variable "ssh_key" {
   description = "SSH key name to use for accessing the ec2 instance"
 }
 
-variable "vpc_id" {
+variable "remote_state_bucket" {
   description = "VPC to place new instance in"
 }
 
-variable "subnet_id" {
+variable "remote_state_key" {
   description = "Subnet to place new instance in"
 }
